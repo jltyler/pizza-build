@@ -1,0 +1,10 @@
+.header {
+    background-color: aliceblue;
+}
+
+.link {
+    padding: 10px;
+    margin: 0 10px;
+    display: inline-block;
+    background-color: rgba(255, 0, 0, .1)
+}
