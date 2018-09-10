@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Preview from './preview/Preview';
+import Controls from './controls/Controls';
 
 class Builder extends Component {
     state = {}
@@ -6,7 +8,8 @@ class Builder extends Component {
     render() {
         return (
             <div className="builder">
-            BUIDLER
+            <Controls></Controls>
+            <Preview></Preview>
             </div>
         )
     }
