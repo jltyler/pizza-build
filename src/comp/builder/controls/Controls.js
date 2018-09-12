@@ -5,7 +5,7 @@ import './Controls.css';
 const Controls = (props) => {
     return (
         <div className="controls">
-        CONTROLS
+        {props.children}
         </div>
     )
 }
