@@ -50,27 +50,24 @@ class Builder extends Component {
 
     constructor(props) {
         super(props);
-        // this.state = {
-        //     size = 'small',
-        //     ingredients: {}
-        // }
         ingredient_list.forEach(i => {
             this.state.ingredients[i.name] = 0
         })
         console.log('this.state.ingredients: ', this.state.ingredients)
-        // this.state.ingredients = ingredient_list.map(i => ({name: i.name, quantity: 0,}))
     }
 
-    addIngredient = (ingredient) => {
+    setIngredient = (ingredient, quantity) => {
+        if (!(ingredient in this.state.ingredients))
+        {
+            console.log("Ingredient \"" + ingredient + "\" not found")
+            return;
+        }
+        // console.log('this.state.ingredients: ', this.state.ingredients)
+        const ingredientsCopy = {...this.state.ingredients};
+        // console.log('ingredientsCopy:', ingredientsCopy)
+        ingredientsCopy[ingredient] = quantity;
         this.setState({
-
-        })
-    }
-
-    removeIngredient = (ingredient) => {
-        
-        this.setState({
-
+            ingredients: ingredientsCopy,
         })
     }
 
@@ -78,9 +75,14 @@ class Builder extends Component {
         return (
             <div className="builder">
             <Controls>
-                <Control name="pepperoni" removeFunc={this.}/>
+                <Control
+                    name="pepperoni"
+                    removeFunc={this.setIngredient.bind(this, 'pepperoni', 0)}
+                    addFunc={this.setIngredient.bind(this, 'pepperoni', 1)}
+                    doubleFunc={this.setIngredient.bind(this, 'pepperoni', 2)}
+                />
             </Controls>
-            <Preview></Preview>
+            <Preview ingredients={this.state.ingredients}/>
             <button className="checkout">Checkout</button>
             </div>
         )
