@@ -10,7 +10,7 @@ const ingredient_list = [
         price: 0.5,
     },
     {
-        name: 'mushrooms',
+    name: 'mushrooms',
         price: 0.725,
     },
     {
@@ -71,16 +71,27 @@ class Builder extends Component {
         })
     }
 
+    renderIngredients = () => {
+        const ingredients = []
+        for (const i in this.state.ingredients) {
+            ingredients.push(
+                <Control
+                    key={i}
+                    name={i}
+                    removeFunc={this.setIngredient.bind(this, i, 0)}
+                    addFunc={this.setIngredient.bind(this, i, 1)}
+                    doubleFunc={this.setIngredient.bind(this, i, 2)}
+                />
+            )
+        }
+        return ingredients;
+    }
+
     render() {
         return (
             <div className="builder">
             <Controls>
-                <Control
-                    name="pepperoni"
-                    removeFunc={this.setIngredient.bind(this, 'pepperoni', 0)}
-                    addFunc={this.setIngredient.bind(this, 'pepperoni', 1)}
-                    doubleFunc={this.setIngredient.bind(this, 'pepperoni', 2)}
-                />
+                {this.renderIngredients()}
             </Controls>
             <Preview ingredients={this.state.ingredients}/>
             <button className="checkout">Checkout</button>
