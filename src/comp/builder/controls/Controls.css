@@ -7,6 +7,11 @@
 
 .control {
     display: block;
-    border: 1px solid black;
+    background-color: rgba(0, 80, 0, 0.5);
     padding: 10px;
+    margin-bottom: 4px;
+}
+
+.control span {
+    padding-right: 12px;
 }
