@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Preview from './preview/Preview';
 import Controls from './controls/Controls';
 import Control from './controls/Control';
+import Store from './Store';
 import './Builder.css';
 
 const base_price = 8.0;
@@ -96,12 +97,35 @@ class Builder extends Component {
         })
     }
 
+    sendOrder = (e) => {
+        const order = {
+            size: this.state.size,
+            ingredients: {...this.state.ingredients},
+            total: this.calculateTotalPrice()
+        }
+        Store.history.push(order)
+        console.log("Store.history:", Store.history)
+        this.newBuilderOrder()
+    }
+
+    newBuilderOrder = () => {
+        const temp_ingredients = {};
+        for (const i in ingredient_prices)
+        {
+            temp_ingredients[i] = 0;
+        }
+        this.setState({
+            size: 'small',
+            ingredients: temp_ingredients,
+        })
+    }
+
     render() {
         return (
             <div className="builder">
                 <Controls>
                     Size:
-                    <select onChange={this.changeSize}>
+                    <select onChange={this.changeSize} value={this.state.size}>
                         <option value="small">Small</option>
                         <option value="medium">Medium</option>
                         <option value="large">Large</option>
@@ -114,7 +138,7 @@ class Builder extends Component {
                     Size: {this.state.size} <br />
                     Total: {this.calculateTotalPrice().toFixed(2)}
                 </div>
-                <button className="checkout">Checkout</button>
+                <button className="checkout" onClick={this.sendOrder}>Order</button>
             </div>
         )
     }
