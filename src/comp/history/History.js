@@ -1,4 +1,5 @@
 import React from 'react';
+import Store from './../builder/Store'
 
 const History = (props) => {
     return (

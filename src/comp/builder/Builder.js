@@ -48,6 +48,8 @@ class Builder extends Component {
             size: 'small',
             ingredients: temp_ingredients,
         }
+
+        this.refreshAppState = props.refreshAppState;
         // console.log('this.state.ingredients: ', this.state.ingredients)
     }
 
@@ -106,6 +108,7 @@ class Builder extends Component {
         Store.history.push(order)
         console.log("Store.history:", Store.history)
         this.newBuilderOrder()
+        this.refreshAppState()
     }
 
     newBuilderOrder = () => {

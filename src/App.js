@@ -4,18 +4,26 @@ import './App.css';
 import Header from './comp/header/Header';
 import Builder from './comp/builder/Builder';
 import History from './comp/history/History';
+import Store from './comp/builder/Store';
 
 class App extends Component {
   state = {
     display: 'builder',
+    historyEntries: 0
+  }
+
+  refreshAppState = (e) => {
+    this.setState({
+      historyEntries: Store.history.length
+    })
   }
 
   getCurrentDisplay = () => {
     switch(this.state.display) {
       case 'builder':
-        return <Builder></Builder>
+        return <Builder refreshAppState={this.refreshAppState} />
       case 'history':
-        return <History></History>
+        return <History/>
       default:
         return <div className="invalid-state">INVALID STATE</div>
     }
@@ -31,7 +39,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header displayChange={this.setCurrentDisplay}></Header>
+        <Header displayChange={this.setCurrentDisplay} historyEntries={this.state.historyEntries} />
         { this.getCurrentDisplay() }
       </div>
     );
