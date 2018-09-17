@@ -105,8 +105,11 @@ class Builder extends Component {
             ingredients: {...this.state.ingredients},
             total: this.calculateTotalPrice()
         }
+        for (const key in order.ingredients) {
+            if (order.ingredients[key] === 0) delete order.ingredients[key];
+        }
         Store.history.push(order)
-        console.log("Store.history:", Store.history)
+        // console.log("Store.history:", Store.history)
         this.newBuilderOrder()
         this.refreshAppState()
     }
