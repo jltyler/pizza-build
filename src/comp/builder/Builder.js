@@ -37,18 +37,25 @@ class Builder extends Component {
     constructor(props) {
         super(props);
 
-        // Assigning state once in the constructor is okay but mutating it is not
-        const temp_ingredients = {};
-        for (const i in ingredient_prices)
+        // Retrieve builder from Store if it's in there
+        if ('builder' in Store) {
+            this.state = Store.builder;
+            delete Store.builder;
+        }
+        else
         {
-            temp_ingredients[i] = 0;
-        }
+            // Assigning state once in the constructor is okay but mutating it is not
+            const temp_ingredients = {};
+            for (const i in ingredient_prices)
+            {
+                temp_ingredients[i] = 0;
+            }
 
-        this.state = {
-            size: 'small',
-            ingredients: temp_ingredients,
+            this.state = {
+                size: 'small',
+                ingredients: temp_ingredients,
+            }
         }
-
         this.refreshAppState = props.refreshAppState;
         // console.log('this.state.ingredients: ', this.state.ingredients)
     }
@@ -124,6 +131,18 @@ class Builder extends Component {
             size: 'small',
             ingredients: temp_ingredients,
         })
+    }
+
+    storeBuilderState = () => {
+        Store.builder = {
+            size: this.state.size,
+            ingredients: {...this.state.ingredients}
+        }
+        console.log("Store.builder:", Store.builder)
+    }
+
+    componentWillUnmount() {
+        this.storeBuilderState()
     }
 
     render() {

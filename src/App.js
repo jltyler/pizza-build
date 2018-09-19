@@ -31,6 +31,10 @@ class App extends Component {
 
   setCurrentDisplay = (newDisplay) => {
     if (this.state.display === newDisplay) return;
+    // if (this.state.display === 'builder') {
+    //   console.log(this.builderRef)
+    //   // this.builderRef.storeBuilderState()
+    // }
     this.setState({
       display: newDisplay
     })
