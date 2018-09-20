@@ -145,6 +145,10 @@ class Builder extends Component {
         this.storeBuilderState()
     }
 
+    displayCheckout = () => {
+        this.props.setCurrentDisplay('confirm', this.state)
+    }
+
     render() {
         return (
             <div className="builder">
@@ -163,7 +167,7 @@ class Builder extends Component {
                     Size: {this.state.size} <br />
                     Total: {this.calculateTotalPrice().toFixed(2)}
                 </div>
-                <button className="checkout" onClick={this.sendOrder}>Order</button>
+                <button className="checkout" onClick={this.displayCheckout}>Order</button>
             </div>
         )
     }
