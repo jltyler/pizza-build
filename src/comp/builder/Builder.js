@@ -3,35 +3,8 @@ import Preview from './preview/Preview';
 import Controls from './controls/Controls';
 import Control from './controls/Control';
 import Store from './Store';
+import Data from '../../Data';
 import './Builder.css';
-
-const base_price = 8.0;
-
-const ingredient_prices = {
-    'pepperoni': 0.5,
-    'mushrooms': 0.725,
-    'black olives': 0.65,
-    'anchovies': 1.5,
-}
-
-const size_table = {
-    small: {
-        diameter: '8 inches',
-        multiplier: 1.0,
-    },
-    medium: {
-        diameter: '10 inches',
-        multiplier: 1.55,
-    },
-    large: {
-        diameter: '12 inches',
-        multiplier: 2.23,
-    },
-    party: {
-        diameter: '18 inches',
-        multiplier: 5.02,
-    },
-}
 
 class Builder extends Component {
     constructor(props) {
@@ -45,30 +18,26 @@ class Builder extends Component {
         else
         {
             // Assigning state once in the constructor is okay but mutating it is not
-            const temp_ingredients = {};
-            for (const i in ingredient_prices)
-            {
-                temp_ingredients[i] = 0;
-            }
+            const newIngredients = {};
+            Data.ingredientNames.forEach((name) => {
+                newIngredients[name] = 0;
+            })
 
             this.state = {
                 size: 'small',
-                ingredients: temp_ingredients,
+                ingredients: newIngredients,
             }
         }
         this.refreshAppState = props.refreshAppState;
-        // console.log('this.state.ingredients: ', this.state.ingredients)
     }
 
     setIngredient = (ingredient, quantity) => {
         if (!(ingredient in this.state.ingredients))
         {
-            console.log("Ingredient \"" + ingredient + "\" not found")
+            console.error("Ingredient \"%s\" not found", ingredient)
             return;
         }
-        // console.log('this.state.ingredients: ', this.state.ingredients)
         const ingredientsCopy = {...this.state.ingredients};
-        // console.log('ingredientsCopy:', ingredientsCopy)
         ingredientsCopy[ingredient] = quantity;
         this.setState({
             ingredients: ingredientsCopy,
@@ -82,9 +51,10 @@ class Builder extends Component {
                 <Control
                     key={i}
                     name={i}
-                    removeFunc={this.setIngredient.bind(this, i, 0)}
-                    addFunc={this.setIngredient.bind(this, i, 1)}
-                    doubleFunc={this.setIngredient.bind(this, i, 2)}
+                    removeFunc={() => this.setIngredient(i, 0)}
+                    addFunc={() => this.setIngredient(i, 1)}
+                    doubleFunc={() => this.setIngredient(i, 2)}
+                    current={this.state.ingredients[i]}
                 />
             )
         }
@@ -92,15 +62,14 @@ class Builder extends Component {
     }
 
     calculateTotalPrice = () => {
-        let price = base_price;
+        let price = Data.basePrice;
         for (const i in this.state.ingredients) {
-            price += this.state.ingredients[i] * ingredient_prices[i];
+            price += this.state.ingredients[i] * Data.ingredientPrices[i];
         }
-        return price * size_table[this.state.size].multiplier;
+        return price * Data.sizeTable[this.state.size].multiplier;
     }
 
     changeSize = (e) => {
-        // console.log('e.target.value:', e.target.value)
         this.setState({
             size: e.target.value,
         })
@@ -116,20 +85,19 @@ class Builder extends Component {
             if (order.ingredients[key] === 0) delete order.ingredients[key];
         }
         Store.history.push(order)
-        // console.log("Store.history:", Store.history)
         this.newBuilderOrder()
         this.refreshAppState()
     }
 
     newBuilderOrder = () => {
-        const temp_ingredients = {};
-        for (const i in ingredient_prices)
+        const tempIngredients = {};
+        for (const i in Data.ingredientPrices)
         {
-            temp_ingredients[i] = 0;
+            tempIngredients[i] = 0;
         }
         this.setState({
             size: 'small',
-            ingredients: temp_ingredients,
+            ingredients: tempIngredients,
         })
     }
 
@@ -138,7 +106,6 @@ class Builder extends Component {
             size: this.state.size,
             ingredients: {...this.state.ingredients}
         }
-        console.log("Store.builder:", Store.builder)
     }
 
     componentWillUnmount() {
@@ -165,7 +132,7 @@ class Builder extends Component {
                 <Preview ingredients={this.state.ingredients}/>
                 <div className="total">
                     Size: {this.state.size} <br />
-                    Total: {this.calculateTotalPrice().toFixed(2)}
+                    Total: {this.calculateTotalPrice(this.state.ingredients).toFixed(2)}
                 </div>
                 <button className="checkout" onClick={this.displayCheckout}>Order</button>
             </div>

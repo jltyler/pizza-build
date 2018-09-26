@@ -2,11 +2,11 @@ import Data from './Data';
 
 const Helpers = {
     calculateTotalPrice: (order) => {
-        let price = Data.base_price;
+        let price = Data.basePrice;
         for (const i in order.ingredients) {
-            price += order.ingredients[i] * Data.ingredient_prices[i];
+            price += order.ingredients[i] * Data.ingredientPrices[i];
         }
-        return price * Data.size_table[order.size].multiplier;
+        return price * Data.sizeTable[order.size].multiplier;
     }
 };
 
