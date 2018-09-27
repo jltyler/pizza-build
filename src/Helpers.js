@@ -2,6 +2,7 @@ import Data from './Data';
 
 const Helpers = {
     calculateTotalPrice: (order) => {
+        console.log(order)
         let price = Data.basePrice;
         for (const i in order.ingredients) {
             price += order.ingredients[i] * Data.ingredientPrices[i];

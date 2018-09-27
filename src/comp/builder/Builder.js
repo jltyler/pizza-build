@@ -4,7 +4,10 @@ import Controls from './controls/Controls';
 import Control from './controls/Control';
 import Store from './Store';
 import Data from '../../Data';
+import Helpers from '../../Helpers';
 import './Builder.css';
+import Modal from '../modal/Modal';
+import Confirm from '../confirm/Confirm';
 
 class Builder extends Component {
     constructor(props) {
@@ -17,16 +20,7 @@ class Builder extends Component {
         }
         else
         {
-            // Assigning state once in the constructor is okay but mutating it is not
-            const newIngredients = {};
-            Data.ingredientNames.forEach((name) => {
-                newIngredients[name] = 0;
-            })
-
-            this.state = {
-                size: 'small',
-                ingredients: newIngredients,
-            }
+            this.state=(this.newBuilderOrder())
         }
         this.refreshAppState = props.refreshAppState;
     }
@@ -61,14 +55,6 @@ class Builder extends Component {
         return ingredients;
     }
 
-    calculateTotalPrice = () => {
-        let price = Data.basePrice;
-        for (const i in this.state.ingredients) {
-            price += this.state.ingredients[i] * Data.ingredientPrices[i];
-        }
-        return price * Data.sizeTable[this.state.size].multiplier;
-    }
-
     changeSize = (e) => {
         this.setState({
             size: e.target.value,
@@ -79,26 +65,24 @@ class Builder extends Component {
         const order = {
             size: this.state.size,
             ingredients: {...this.state.ingredients},
-            total: this.calculateTotalPrice()
+            total: Helpers.calculateTotalPrice(this.state),
         }
         for (const key in order.ingredients) {
             if (order.ingredients[key] === 0) delete order.ingredients[key];
         }
         Store.history.push(order)
-        this.newBuilderOrder()
+        this.setState(this.newBuilderOrder())
         this.refreshAppState()
     }
 
     newBuilderOrder = () => {
-        const tempIngredients = {};
-        for (const i in Data.ingredientPrices)
-        {
-            tempIngredients[i] = 0;
-        }
-        this.setState({
+        const ingredients = {};
+        for (const i in Data.ingredientPrices) ingredients[i] = 0;
+        return {
             size: 'small',
-            ingredients: tempIngredients,
-        })
+            ingredients,
+            confirm: false,
+        }
     }
 
     storeBuilderState = () => {
@@ -113,12 +97,22 @@ class Builder extends Component {
     }
 
     displayCheckout = () => {
-        this.props.setCurrentDisplay('confirm', this.state)
+        this.setState({
+            confirm: true,
+        })
     }
 
     render() {
         return (
             <div className="builder">
+                <Modal show={this.state.confirm}>
+                    <Confirm
+                        order={{
+                            ...this.state,
+                            total: Helpers.calculateTotalPrice(this.state),
+                            }}
+                        confirmOrder={this.sendOrder}/>
+                </Modal>
                 <Controls>
                     Size:
                     <select onChange={this.changeSize} value={this.state.size}>
@@ -132,7 +126,7 @@ class Builder extends Component {
                 <Preview ingredients={this.state.ingredients}/>
                 <div className="total">
                     Size: {this.state.size} <br />
-                    Total: {this.calculateTotalPrice(this.state.ingredients).toFixed(2)}
+                    Total: {Helpers.calculateTotalPrice(this.state).toFixed(2)}
                 </div>
                 <button className="checkout" onClick={this.displayCheckout}>Order</button>
             </div>
