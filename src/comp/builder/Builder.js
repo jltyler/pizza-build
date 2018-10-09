@@ -85,20 +85,7 @@ class Builder extends Component {
             if (order.ingredients[key] === 0) delete order.ingredients[key];
         }
         Store.history.push(order)
-        this.newBuilderOrder()
         this.refreshAppState()
-    }
-
-    newBuilderOrder = () => {
-        const tempIngredients = {};
-        for (const i in Data.ingredientPrices)
-        {
-            tempIngredients[i] = 0;
-        }
-        this.setState({
-            size: 'small',
-            ingredients: tempIngredients,
-        })
     }
 
     storeBuilderState = () => {
