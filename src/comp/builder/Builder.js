@@ -44,7 +44,7 @@ class Builder extends Component {
         })
     }
 
-    renderIngredients = () => {
+    renderIngredientControls = () => {
         const ingredients = []
         for (const i in this.state.ingredients) {
             ingredients.push(
@@ -114,7 +114,7 @@ class Builder extends Component {
                         <option value="large">Large</option>
                         <option value="party">Party</option>
                     </select>
-                    {this.renderIngredients()}
+                    {this.renderIngredientControls()}
                 </Controls>
                 <Preview ingredients={this.state.ingredients}/>
                 <div className="total">
