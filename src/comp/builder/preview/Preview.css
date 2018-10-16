@@ -13,7 +13,8 @@
     width: 400px;
     height: 400px;
     box-sizing: border-box;
-    background-color: rgb(252, 169, 61);
+    background-color: rgb(255, 172, 46);
+    border: 16px solid rgb(255, 202, 133);
     border-radius: 50%;
 }
 

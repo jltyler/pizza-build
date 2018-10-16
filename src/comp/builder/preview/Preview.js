@@ -3,7 +3,22 @@ import './Preview.css'
 import Helpers from '../../../Helpers';
 import Poisson from '../../../Poisson';
 
-const positions = Poisson(400, 400, 40, {cullDistance: 180});
+const pizzaSize = 400 - 16 * 2;
+
+const positions = Poisson(pizzaSize, pizzaSize, 30, {cullDistance: 180});
+
+const ingredientMapper = (name, p, i) => {
+    return <div
+        className={name}
+        style={{left: p[0] - 10, top: p[1] - 10}}
+        key={i} />
+}
+
+const pepperoni_elements = [
+    null,
+    Poisson(pizzaSize, pizzaSize, 35, {cullDistance: 180}).map(ingredientMapper.bind(null, 'pepperoni')),
+    Poisson(pizzaSize, pizzaSize, 25, {cullDistance: 180}).map(ingredientMapper.bind(null, 'pepperoni')),
+]
 
 const ListIngredients = (ingredients) => {
     const ret_list = [];
@@ -18,15 +33,7 @@ const Preview = (props) => {
     return (
         <div className="preview">
             <div className="pizza-base">
-                {positions.map((p, i) => {
-                    return <div
-                        className="pepperoni"
-                        style={{
-                            left: p[0] - 10,
-                            top: p[1] - 10,
-                        }}
-                        key={i}></div>
-                })}
+                {pepperoni_elements[props.ingredients.pepperoni]}
 
             </div>
             {ListIngredients(props.ingredients)}
