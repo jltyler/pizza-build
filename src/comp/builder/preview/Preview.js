@@ -6,7 +6,7 @@ const positions = [];
 for (let i = 0; i < 20; i++) {
     positions.push([
         Math.random() * 180 + 40,
-        Math.random() * 10 + 0,
+        Math.random() * 180 + 40,
     ]);
 }
 
@@ -36,7 +36,7 @@ const Preview = (props) => {
                 })}
 
             </div>
-            {ListIngredients(props.ingredients)}
+            {/* {ListIngredients(props.ingredients)} */}
         </div>
     )
 }
