@@ -1,14 +1,17 @@
 .preview {
     display: inline-block;
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    min-height: 400px;
     background-color: rgb(211, 255, 255);
+    box-sizing: border-box;
+    vertical-align: top;
 }
 
 .pizza-base {
+    position: relative;
     display: inline-block;
-    width: 280px;
-    height: 280px;
+    width: 400px;
+    height: 400px;
     box-sizing: border-box;
     background-color: rgb(252, 169, 61);
     border-radius: 50%;
@@ -16,8 +19,9 @@
 
 .pepperoni {
     display: inline-block;
-    position: relative;
-    background-color: rgb(255, 72, 0);
+    position: absolute;
+    background-color: rgb(255, 40, 0);
+    border: 1px solid maroon;
     width: 20px;
     height: 20px;
     border-radius: 50%;

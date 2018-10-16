@@ -117,6 +117,7 @@ class Builder extends Component {
                     {this.renderIngredientControls()}
                 </Controls>
                 <Preview ingredients={this.state.ingredients}/>
+                <br />
                 <div className="total">
                     Size: {this.state.size} <br />
                     Total: {this.calculateTotalPrice(this.state.ingredients).toFixed(2)}
