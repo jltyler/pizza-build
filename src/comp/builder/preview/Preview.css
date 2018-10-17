@@ -38,3 +38,27 @@
     border-radius: 50%;
     box-sizing: border-box;
 }
+
+.mushroom {
+    position: absolute;
+}
+
+.mushroom-head {
+    display: inline-block;
+    position: relative;
+    width: 12px;
+    height: 6px;
+    border-top-left-radius: 400%;
+    border-top-right-radius: 400%;
+    background-color: rgb(211, 164, 121);
+    vertical-align: top;
+    left: -50%;
+}
+
+.mushroom-stem {
+    display: inline-block;
+    position: relative;
+    background-color: rgb(194, 152, 114);
+    width: 3px;
+    height: 8px;
+}
