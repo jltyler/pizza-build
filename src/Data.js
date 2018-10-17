@@ -4,7 +4,7 @@ const ingredientPrices = {
     'mushrooms': 0.725,
     'black olives': 0.65,
     'pineapple': 0.8,
-    'onions': 0.6,
+    'green chile': 1.3,
     'anchovies': 1.75,
 };
 
