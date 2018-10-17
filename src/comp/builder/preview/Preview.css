@@ -62,3 +62,30 @@
     width: 3px;
     height: 8px;
 }
+
+.pineapple {
+    display: inline-block;
+    position: absolute;
+    border-bottom: 10px solid rgb(255, 255, 95);
+    border-left: 2.5px solid transparent;
+    border-right: 2.5px solid transparent;
+    height: 0;
+    width: 6px;
+}
+
+.greenchile {
+    display: inline-block;
+    position: absolute;
+    background-color: rgb(42, 161, 18);
+    height: 4px;
+    width: 6px;
+}
+
+.anchovy {
+    display: inline-block;
+    position: absolute;
+    background-color: rgb(223, 78, 109);
+    height: 8px;
+    width: 28px;
+    border-radius: 50%;
+}
