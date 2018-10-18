@@ -5,6 +5,7 @@ import Control from './controls/Control';
 import Store from './Store';
 import Data from '../../Data';
 import './Builder.css';
+import SizeControl from './controls/SizeControl';
 
 class Builder extends Component {
     constructor(props) {
@@ -69,9 +70,9 @@ class Builder extends Component {
         return price * Data.sizeTable[this.state.size].multiplier;
     }
 
-    changeSize = (e) => {
+    changeSize = (newSize) => {
         this.setState({
-            size: e.target.value,
+            size: newSize,
         })
     }
 
@@ -107,13 +108,7 @@ class Builder extends Component {
         return (
             <div className="builder">
                 <Controls>
-                    Size:
-                    <select onChange={this.changeSize} value={this.state.size}>
-                        <option value="small">Small</option>
-                        <option value="medium">Medium</option>
-                        <option value="large">Large</option>
-                        <option value="party">Party</option>
-                    </select>
+                    <SizeControl size={this.state.size} changeSize={this.changeSize}/>
                     {this.renderIngredientControls()}
                 </Controls>
                 <Preview ingredients={this.state.ingredients}>
