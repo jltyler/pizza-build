@@ -1,10 +1,16 @@
 .preview {
     display: inline-block;
-    width: 400px;
+    width: 450px;
     min-height: 400px;
-    background-color: rgb(211, 255, 255);
+    background: linear-gradient(rgb(211, 255, 255), rgb(98, 255, 255));
     box-sizing: border-box;
     vertical-align: top;
+    padding: 25px;
+    height: 100%;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border: 1px solid rgba(0, 0, 0, .35);
+    border-left: none;
 }
 
 .pizza-base {

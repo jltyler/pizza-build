@@ -77,9 +77,8 @@ const Preview = (props) => {
                 {pineappleElements[props.ingredients.pineapple]}
                 {greenchileElements[props.ingredients['green chile']]}
                 {anchovyElements[props.ingredients['anchovies']]}
-                
             </div>
-            {ListIngredients(props.ingredients)}
+            {props.children}
         </div>
     )
 }

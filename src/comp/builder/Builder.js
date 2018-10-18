@@ -116,13 +116,13 @@ class Builder extends Component {
                     </select>
                     {this.renderIngredientControls()}
                 </Controls>
-                <Preview ingredients={this.state.ingredients}/>
-                <br />
-                <div className="total">
-                    Size: {this.state.size} <br />
-                    Total: {this.calculateTotalPrice(this.state.ingredients).toFixed(2)}
-                </div>
-                <button className="checkout" onClick={this.displayCheckout}>Order</button>
+                <Preview ingredients={this.state.ingredients}>
+                    <div className="total">
+                        {this.state.size[0].toUpperCase() + this.state.size.slice(1)} pizza <br />
+                        <span>Total:</span> ${this.calculateTotalPrice(this.state.ingredients).toFixed(2)}
+                    </div>
+                </Preview>
+                <button className="checkout" onClick={this.displayCheckout}> Review Order</button>
             </div>
         )
     }
