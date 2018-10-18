@@ -4,6 +4,7 @@ import Controls from './controls/Controls';
 import Control from './controls/Control';
 import Store from './Store';
 import Data from '../../Data';
+import Helpers from "../../Helpers";
 import './Builder.css';
 import SizeControl from './controls/SizeControl';
 
@@ -113,7 +114,7 @@ class Builder extends Component {
                 </Controls>
                 <Preview ingredients={this.state.ingredients}>
                     <div className="total">
-                        {this.state.size[0].toUpperCase() + this.state.size.slice(1)} pizza <br />
+                        {Helpers.capitalize(this.state.size)} pizza <br />
                         <span>Total:</span> ${this.calculateTotalPrice(this.state.ingredients).toFixed(2)}
                     </div>
                 </Preview>

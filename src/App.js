@@ -6,7 +6,6 @@ import Builder from './comp/builder/Builder';
 import History from './comp/history/History';
 import Store from './comp/builder/Store';
 import Confirm from './comp/confirm/Confirm';
-import Data from './Data';
 import Helpers from './Helpers';
 
 class App extends Component {

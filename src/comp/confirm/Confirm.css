@@ -1,0 +1,38 @@
+.confirm {
+    width: 800px;
+    background: linear-gradient(rgb(255, 191, 131), rgb(255, 240, 33));
+    margin: 0 auto;
+    border-radius: 25px;
+    border: 1px solid rgba(0, 0, 0, .35);
+}
+
+.confirm h1 {
+    font-size: 24px;
+    margin: 12px 0;
+}
+
+.ingredient {
+    font-size: 20px;
+}
+
+.confirm button {
+    font-size: 20px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    padding: 8px 16px;
+    border: 3px solid black;
+}
+
+.confirm button.confirm-button {
+    background-color: rgb(113, 255, 113);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-color: rgb(0, 185, 0);
+}
+
+.confirm button.cancel-button {
+    background-color: rgb(255, 83, 83);
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-color: rgb(158, 0, 0);
+}
