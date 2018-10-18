@@ -10,7 +10,7 @@ import Helpers from './Helpers';
 
 class App extends Component {
   orderState = null;
-
+  lastDisplay = 'builder';
   state = {
     display: 'builder',
     historyEntries: 0
@@ -29,7 +29,7 @@ class App extends Component {
       case 'history':
         return <History/>
       case 'confirm':
-        return <Confirm order={this.orderState} confirmOrder={this.confirmOrder}/>
+        return <Confirm order={this.orderState} confirmOrder={this.confirmOrder} goBack={this.previousDisplay} />
       default:
         return <div className="invalid-state">INVALID STATE</div>
     }
@@ -39,6 +39,7 @@ class App extends Component {
     console.log(newDisplay, options);
     
     if (this.state.display === newDisplay) return;
+    this.lastDisplay = this.state.display;
     if (newDisplay === 'confirm') {
       this.orderState = options;
       this.orderState.total = Helpers.calculateTotalPrice(this.orderState);
@@ -50,6 +51,11 @@ class App extends Component {
     this.setState({
       display: newDisplay
     })
+  }
+
+  previousDisplay = () => {
+    if (this.lastDisplay === this.state.display) return;
+    this.setCurrentDisplay(this.lastDisplay);
   }
 
   confirmOrder = () => {
