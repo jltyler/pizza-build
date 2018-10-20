@@ -2,6 +2,22 @@ import React from 'react';
 import './History.css'
 import Store from './../builder/Store'
 import Helpers from '../../Helpers';
+import Data from '../../Data';
+
+const randomHistory = (entries = 10) => {
+    for(let i = entries; i > 0; --i)
+    {
+        const order = {
+            size: Helpers.choose(Object.keys(Data.sizeTable)),
+            ingredients: {},
+        }
+        Data.ingredientNames.forEach((name) => order.ingredients[name] = Helpers.choose(0, 1, 2))
+        order.total = Helpers.calculateTotalPrice(order);
+        Store.history.push(order)
+    }
+}
+
+randomHistory();
 
 const Ingredient = (props) => {
     return (
@@ -12,7 +28,8 @@ const Ingredient = (props) => {
 const Entry = (props) => {
     const ingredients = []
     for (const ing in props.orderObject.ingredients) {
-        ingredients.push(<Ingredient name={ing} count={props.orderObject.ingredients[ing]} />)
+        if (props.orderObject.ingredients[ing] > 0)
+            ingredients.push(<Ingredient name={ing} count={props.orderObject.ingredients[ing]} />);
     }
     return (
         <div className="entry">
