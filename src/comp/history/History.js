@@ -1,29 +1,24 @@
 import React from 'react';
 import './History.css'
 import Store from './../builder/Store'
+import Helpers from '../../Helpers';
 
 const Ingredient = (props) => {
     return (
-        <div className="ingredient">{props.name}, Count: {props.count}</div>
+        <div className="ingredient">{Helpers.capitalize(props.name)} {props.count > 1 ? '(double)' : ''}</div>
     )
 }
 
 const Entry = (props) => {
     const ingredients = []
     for (const ing in props.orderObject.ingredients) {
-        ingredients.push({name: ing, count: props.orderObject.ingredients[ing]})
+        ingredients.push(<Ingredient name={ing} count={props.orderObject.ingredients[ing]} />)
     }
     return (
         <div className="entry">
-            <div className="left">
-                Size: {props.orderObject.size} <br />
-                Total: {props.orderObject.total.toFixed(2)}
-            </div>
-            <div className="right">
-                {ingredients.length > 0 && ingredients.map((ing, index) => (
-                    <Ingredient key={index} name={ing.name} count={ing.count} />
-                ))}
-            </div>
+                <h1>{Helpers.capitalize(props.orderObject.size)} Pizza</h1><br />
+                {ingredients.length > 0 && ingredients}
+                <h2>Total: {props.orderObject.total.toFixed(2)}</h2>
         </div>
     )
 }
@@ -31,6 +26,7 @@ const Entry = (props) => {
 const History = (props) => {
     return (
         <div className="history">
+            <div className="title">Order History <br />Total entries: {Store.history.length}</div>
             {Store.history.map((e, i) => (
                 <Entry key={i} index={i} orderObject={e} />
             ))}

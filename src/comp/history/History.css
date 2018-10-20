@@ -1,23 +1,29 @@
 .history {
-    border: 1px solid red;
+    border: 1px solid rgba(0, 0, 0, .35);
     padding: 16px;
+    border-radius: 25px;
+    background: linear-gradient(rgb(251, 205, 255), rgb(255, 140, 226));
+    width: 800px;
+    margin: 0 auto;
 }
 
-.history .entry {
-    border: 1px solid maroon;
-    margin-bottom: 5px;
+.history .title {
+    font-size: 36px;
+    margin: 10px 0;
 }
 
-.history .entry .left {
-    background-color: rgba(100, 148, 237, 0.623);
-    box-sizing: border-box;
+.entry {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
     width: 50%;
-    display: inline-block;
+    margin: 0 auto 15px;
+    padding: 10px 0;
 }
 
-.history .entry .right {
-    background-color: aquamarine;
-    box-sizing: border-box;
-    width: 50%;
-    display: inline-block;
+.entry h1 {
+    margin: 0;
+}
+
+.entry .ingredient {
+    font-size: 20px;
 }
