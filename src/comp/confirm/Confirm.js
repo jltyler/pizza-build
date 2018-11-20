@@ -14,7 +14,7 @@ const Confirm = (props) => {
                     className="ingredient"
                     key={i}>
                     {Helpers.capitalize(i)} {props.order.ingredients[i] > 1 ? '(2x)' : ''} (${(Data.ingredientPrices[i] * props.order.ingredients[i] * multiplier).toFixed(2)})
-                </div>))
+                </div>));
     }
     return (
     <div className="confirm">
@@ -26,6 +26,6 @@ const Confirm = (props) => {
         <button className="cancel-button" onClick={props.goBack}>Go Back</button>
     </div>
     );
-}
+};
 
 export default Confirm;

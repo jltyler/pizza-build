@@ -7,7 +7,7 @@ const Controls = (props) => {
         <div className="controls">
         {props.children}
         </div>
-    )
-}
+    );
+};
 
 export default Controls;

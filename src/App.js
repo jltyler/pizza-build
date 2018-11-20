@@ -10,34 +10,36 @@ import Helpers from './Helpers';
 
 class App extends Component {
   orderState = null;
+
   lastDisplay = 'builder';
+
   state = {
     display: 'builder',
     historyEntries: 0
   }
 
-  refreshAppState = (e) => {
+  refreshAppState = () => {
     this.setState({
       historyEntries: Store.history.length
-    })
+    });
   }
 
   getCurrentDisplay = () => {
     switch(this.state.display) {
       case 'builder':
-        return <Builder refreshAppState={this.refreshAppState} setCurrentDisplay={this.setCurrentDisplay}/>
+        return <Builder refreshAppState={this.refreshAppState} setCurrentDisplay={this.setCurrentDisplay}/>;
       case 'history':
-        return <History/>
+        return <History/>;
       case 'confirm':
-        return <Confirm order={this.orderState} confirmOrder={this.confirmOrder} goBack={this.previousDisplay} />
+        return <Confirm order={this.orderState} confirmOrder={this.confirmOrder} goBack={this.previousDisplay} />;
       default:
-        return <div className="invalid-state">INVALID STATE</div>
+        return <div className="invalid-state">INVALID STATE</div>;
     }
   }
 
   setCurrentDisplay = (newDisplay, options) => {
     console.log(newDisplay, options);
-    
+
     if (this.state.display === newDisplay) return;
     this.lastDisplay = this.state.display;
     if (newDisplay === 'confirm') {
@@ -50,7 +52,7 @@ class App extends Component {
     // }
     this.setState({
       display: newDisplay
-    })
+    });
   }
 
   previousDisplay = () => {
@@ -63,19 +65,27 @@ class App extends Component {
       size: this.orderState.size,
       ingredients: {...this.orderState.ingredients},
       total: this.orderState.total,
-    }
+    };
     for (const key in order.ingredients) {
         if (order.ingredients[key] === 0) delete order.ingredients[key];
     }
-    Store.history.push(order)
+    Store.history.push(order);
     if ('builder' in Store) delete Store.builder;
-    this.refreshAppState()
-    this.setCurrentDisplay('history')
+    this.refreshAppState();
+    this.setCurrentDisplay('history');
   }
 
   render() {
     return (
       <div className="App">
+      <div className="fetch-test">
+        <button onClick={() => {
+          fetch('https://jsonplaceholder.typicode.com/users')
+          .then((r) => console.log(r), r.json())
+          .then((j) => console.log(j))
+          .catch((e) => console.error(e));
+          }}>Hmm...</button>
+      </div>
         <Header displayChange={this.setCurrentDisplay} historyEntries={this.state.historyEntries} />
         { this.getCurrentDisplay() }
       </div>

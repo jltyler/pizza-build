@@ -4,7 +4,7 @@ const defaultOptions = {
     number: 0,
     attempts: 30,
     cullDistance: 0,
-}
+};
 
 /**
  * Generates and returns a list of coordinate pairs using Poisson-Disc sampling algorithm
@@ -15,7 +15,7 @@ const defaultOptions = {
  * @arg {number} options.number - Number of points to generate. Attempts to fill space if this is 0
  * @arg {number} options.attempts - Number of attempts to generate a point before giving up on that point. Defaults to 30
  * @arg {number} options.cullDistance - Any points further than this from the center of the field are removed from the final sample list
- * 
+ *
  * @returns {Array} - Array of generated coordinate pairs
 */
 
@@ -74,7 +74,7 @@ const generateSamples = (width, height, minDistance, options = {}) => {
             neighbors.push(grid[nx][ny]);
         };
         return neighbors;
-    }
+    };
 
     /**
      * Checks for any existing points around a new point
@@ -82,19 +82,18 @@ const generateSamples = (width, height, minDistance, options = {}) => {
      * @returns {boolean} True if no points are nearby, false otherwise
      */
     const checkDistance = (coords) => {
-        
         const gc = gridCoords(coords);
         const neighbors = getNeighbors(gc);
         for (let i = 0; i < neighbors.length; i++) {
             const compareCoords = samples[neighbors[i]];
             const distance = Math.pow(coords[0] - compareCoords[0], 2) + Math.pow(coords[1] - compareCoords[1], 2);
-            
+
             if (distance <= minDistance2)
             {
                 return false;
             }
         }
-        
+
         return true;
     };
 
@@ -115,9 +114,9 @@ const generateSamples = (width, height, minDistance, options = {}) => {
             if (newPoint[0] < 0 || newPoint[0] >= width || newPoint[1] < 0 || newPoint[1] >= height) continue;
             if (checkDistance(newPoint)) return newPoint;
         }
-        
+
         return undefined;
-    }
+    };
 
     // Start of actual generation
     const startPoint = [Math.random() * width, Math.random() * height];
@@ -126,8 +125,8 @@ const generateSamples = (width, height, minDistance, options = {}) => {
     // First point grid location
     const startCell = gridCoords(startPoint);
     grid[startCell[0]][startCell[1]] = 0;
-    
-    while(activePoints.length > 0 && samples.length !== options.number) {  
+
+    while(activePoints.length > 0 && samples.length !== options.number) {
         const refIndex = Helpers.choose(activePoints);
         const refCoords = samples[refIndex];
         const newPoint = findPoint(refCoords);
@@ -145,7 +144,7 @@ const generateSamples = (width, height, minDistance, options = {}) => {
         }
     }
 
-    return (cullDistance2 <= 0) ? samples : samples.filter(s => (Math.pow(s[0] - center[0], 2) + Math.pow(s[1] - center[1], 2) < cullDistance2));
+    return (cullDistance2 <= 0) ? samples : samples.filter((s) => (Math.pow(s[0] - center[0], 2) + Math.pow(s[1] - center[1], 2) < cullDistance2));
 };
 
 export default generateSamples;

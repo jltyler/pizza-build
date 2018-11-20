@@ -11,7 +11,7 @@ const Control = (props) => {
                 <button className="right" onClick={props.doubleFunc} disabled={props.current === 2}>Lots</button>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Control;

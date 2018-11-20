@@ -23,12 +23,12 @@ class Builder extends Component {
             const newIngredients = {};
             Data.ingredientNames.forEach((name) => {
                 newIngredients[name] = 0;
-            })
+            });
 
             this.state = {
                 size: 'small',
                 ingredients: newIngredients,
-            }
+            };
         }
         this.refreshAppState = props.refreshAppState;
     }
@@ -36,18 +36,20 @@ class Builder extends Component {
     setIngredient = (ingredient, quantity) => {
         if (!(ingredient in this.state.ingredients))
         {
-            console.error("Ingredient \"%s\" not found", ingredient)
+            console.error("Ingredient \"%s\" not found", ingredient);
             return;
         }
-        const ingredientsCopy = {...this.state.ingredients};
-        ingredientsCopy[ingredient] = quantity;
-        this.setState({
-            ingredients: ingredientsCopy,
-        })
+        this.setState((prevState) => {
+            const ingredientsCopy = {...prevState.ingredients};
+            ingredientsCopy[ingredient] = quantity;
+            return {
+                ingredients: ingredientsCopy
+            };
+        });
     }
 
     renderIngredientControls = () => {
-        const ingredients = []
+        const ingredients = [];
         for (const i in this.state.ingredients) {
             ingredients.push(
                 <Control
@@ -58,7 +60,7 @@ class Builder extends Component {
                     doubleFunc={() => this.setIngredient(i, 2)}
                     current={this.state.ingredients[i]}
                 />
-            )
+            );
         }
         return ingredients;
     }
@@ -74,35 +76,35 @@ class Builder extends Component {
     changeSize = (newSize) => {
         this.setState({
             size: newSize,
-        })
+        });
     }
 
-    sendOrder = (e) => {
+    sendOrder = () => {
         const order = {
             size: this.state.size,
             ingredients: {...this.state.ingredients},
             total: this.calculateTotalPrice()
-        }
+        };
         for (const key in order.ingredients) {
             if (order.ingredients[key] === 0) delete order.ingredients[key];
         }
-        Store.history.push(order)
-        this.refreshAppState()
+        Store.history.push(order);
+        this.refreshAppState();
     }
 
     storeBuilderState = () => {
         Store.builder = {
             size: this.state.size,
             ingredients: {...this.state.ingredients}
-        }
+        };
     }
 
     componentWillUnmount() {
-        this.storeBuilderState()
+        this.storeBuilderState();
     }
 
     displayCheckout = () => {
-        this.props.setCurrentDisplay('confirm', this.state)
+        this.props.setCurrentDisplay('confirm', this.state);
     }
 
     render() {
@@ -120,7 +122,7 @@ class Builder extends Component {
                 </Preview>
                 <button className="checkout" onClick={this.displayCheckout}> Review Order</button>
             </div>
-        )
+        );
     }
 }
 

@@ -17,6 +17,6 @@ const SizeControl = (props) => {
             disabled={props.size === 'party'} >Party</button>
     </div>
     );
-}
+};
 
 export default SizeControl;
